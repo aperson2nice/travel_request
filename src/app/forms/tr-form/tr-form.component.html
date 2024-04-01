@@ -6,10 +6,10 @@
 </head>
 <div class="container d-flex justify-content-center align-items-center" style="padding:60px;">
 
-    <!-- <div class="col">
+    <div class="col">
         <img src="assets/sisdlogo2.png" style="width: 200px" alt="sisdlogo">
-    </div> -->
-    <div class="col">å
+    </div>
+    <div class="col">
 
         <div class="title">
             Travel Request
@@ -17,7 +17,8 @@
     </div>
     <div class="col" id="spacer">
     </div>
-    Å
+
+
 
 </div>
 
@@ -26,8 +27,8 @@
 
     <!-- tr # and date -->
     <!-- <form [formGroup]="FeedBack" (ngSubmit)="onSubmit()"></form> -->
+    <!-- <form [formGroup]="dist_fund_response"> -->
     <form>
-
         <div class="row mb-3">
             <div class="col">
                 <label for="TR#"> TR#</label>
@@ -44,7 +45,7 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="secretaryEmplNumber">Secretary Employee Number</label>
-                <input type="text" class="form-control" [formControl]="secretary_num"
+                <input type="text" (keypress)="onlyNumbers($event)" class="form-control" [formControl]="secretary_num"
                     placeholder="Only Secretaries may submit this form" id="employeId">
             </div>
 
@@ -64,40 +65,43 @@
         </div>
         <br>
         <!-- board of trustees -->
-        <div>
+        <!-- <div> -->
+
+
+        <div class="row mb-3">
+            <div class="col">
+                <input type="checkbox" id="boardOfTrustees" (change)="true" #checkBox> <label for="boardTravell">Board
+                    of
+                    Trustees Travel</label>
+            </div>
+        </div>
+        <div *ngIf="!checkBox.checked">
+            <!-- primary traveler -->
             <div class="row mb-3">
                 <div class="col">
-                    <input type="checkbox" id="boardOfTrustees" class="label" (change)="true" #checkBox> Board of
-                    Trustees Travel
-                </div>
-            </div>
-            <div *ngIf="!checkBox.checked">
-                <!-- primary traveler -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="secretaryEmplNumber">Primary Traveler Employee #</label>
-                        <input type="text" class="form-control" [formControl]="primary_traveler_emp_num"
-                            placeholder="Enter #" id="employeId">
-
-                    </div>
-
-                    <div class="col">
-                        <label for="inputEmail">Primary Traveler Vendor #</label>
-                        <input type="text" class="form-control" [formControl]="primary_traveler_vend_num" placeholder=""
-                            id="Enter #">
-
-                    </div>
-
-                    <div class="col">
-                        <label for="inputEmail">Primary Traveler Name</label>
-                        <input type="text" class="form-control" [formControl]="primary_traveler_name" placeholder=""
-                            id="primaryName">
-                    </div>
+                    <label for="secretaryEmplNumber">Primary Traveler Employee #</label>
+                    <input type="text" (keypress)="onlyNumbers($event)" class="form-control"
+                        [formControl]="primary_traveler_emp_num" placeholder="Enter #" id="employeId">
 
                 </div>
-            </div>
 
+                <div class="col">
+                    <label for="inputEmail">Primary Traveler Vendor #</label>
+                    <input type="text" class="form-control" [formControl]="primary_traveler_vend_num" placeholder=""
+                        id="Enter #">
+
+                </div>
+
+                <div class="col">
+                    <label for="inputEmail">Primary Traveler Name</label>
+                    <input type="text" class="form-control" [formControl]="primary_traveler_name" placeholder=""
+                        id="primaryName">
+                </div>
+
+            </div>
         </div>
+
+        <!-- </div> -->
         <hr>
 
 
@@ -214,7 +218,9 @@
                 <div class="col">
                     <label for="numEmpl">Number of Additional <br> Employees </label>
 
-                    <select class="form-control" [formControl]="number_of_add_employees" name="numEmpl" id="numEmpl" (change)="addNewRow('additional employee')">
+
+                    <select class="form-control" [formControl]="number_of_add_employees" name="numEmpl" id="numEmpl"
+                        (change)="addNewRow('additional employee')">
                         <option *ngFor="let num2 of emplCount" [value]="num2">
                             {{num2}}
                         </option>
@@ -223,7 +229,9 @@
 
                 <div class="col">
                     <label for="numBoard">Number of Additional Board Member Travelers </label>
-                    <select class="form-control" [formControl]="number_of_add_board" name="numBoard" id="numBoard" (change)="addNewRow('additional boardmember')">
+                    <select class="form-control" [formControl]="number_of_add_board" name="numBoard" id="numBoard"
+                        (change)="addNewRow('additional boardmember')">
+
                         <option *ngFor="let num2 of emplCount" [value]="num2">
                             {{num2}}
                         </option>
@@ -232,7 +240,8 @@
 
                 <div class="col">
                     <label for="requestDate">Number of Student <br>Travelers</label>
-                    <select class="form-control" [formControl]="number_of_students" name="numStudent" id="numStudent" (change)="addNewRow('additional students')">
+                    <select class="form-control" [formControl]="number_of_students" name="numStudent" id="numStudent"
+                        (change)="addNewRow('additional students')">
                         <option *ngFor="let num of studCount" [value]="num">
                             {{num}}
                         </option>
@@ -242,7 +251,8 @@
 
                 <div class="col">
                     <label for="numNonBoard">Number of Non-Employee, <br> Non-Board Travelers </label>
-                    <select class="form-control" [formControl]="number_of_nonboard" name="numNonBoard" id="numNonBoard"  (change)="addNewRow('additional nonboard')">
+                    <select class="form-control" [formControl]="number_of_nonboard" name="numNonBoard" id="numNonBoard"
+                        (change)="addNewRow('additional nonboard')">
                         <option *ngFor="let num2 of emplCount" [value]="num2">
                             {{num2}}
                         </option>
@@ -251,6 +261,7 @@
             </div>
             <div class="subtext">Signatures are required</div>
             <!--//////////////////////////////////// if additional employees selected///////////////////////// -->
+
 
             <form [formGroup]="additional_empoloyee_response">
 
@@ -277,12 +288,15 @@
                         </tbody>
                     </table>
 
+
                 </div>
             </form>
             <!--//////////////////////////////////// if additional board memebers selected///////////////////////// -->
 
             <form [formGroup]="additional_boardmember_response">
                 <div class="row mb-3" *ngIf="number_of_add_board.value >= 1">
+
+
 
                     <table class="table">
                         <thead class="table-light" style="text-align: center;">
@@ -295,17 +309,17 @@
                         <tbody formArrayName="AdditionalBoardmemberRows">
                             <tr *ngFor="let obj of additionalBoardmemberFormArr.controls; let i = index; let l = last"
                                 [formGroupName]="i">
-                                <td><input type="text" class="form-control" formControlName="name"
-                                        id="name"></td>
-                                <td><input type="text" class="form-control" formControlName="email"
-                                        id="email"></td>
+                                <td><input type="text" class="form-control" formControlName="name" id="name"></td>
+                                <td><input type="text" class="form-control" formControlName="email" id="email"></td>
                             </tr>
                         </tbody>
                     </table>
 
                 </div>
             </form>
+
             <!--//////////////////////////////////// if students are selected ///////////////////////// -->
+
             <form [formGroup]="additional_students_response">
                 <div class="row mb-3" *ngIf="number_of_students.value >= 1">
 
@@ -320,21 +334,24 @@
                         <tbody formArrayName="AdditionalStudentsRows">
                             <tr *ngFor="let obj of additionalStudentsFormArr.controls; let i = index; let l = last"
                                 [formGroupName]="i">
-                                <td><input type="text" class="form-control" formControlName="id"
-                                        id="id"></td>
-                                <td><input type="text" class="form-control" formControlName="name"
-                                        id="name"></td>
+                                <td><input type="text" class="form-control" formControlName="id" id="id"></td>
+                                <td><input type="text" class="form-control" formControlName="name" id="name"></td>
                             </tr>
                         </tbody>
                     </table>
+
 
                 </div>
             </form>
 
             <!--//////////////////////////////////// if additional non-board memebers selected///////////////////////// -->
-
             <form [formGroup]="additional_nonboard_response">
                 <div class="row mb-3" *ngIf="number_of_nonboard.value >= 1">
+
+
+
+
+
 
                     <table class="table">
                         <thead class="table-light" style="text-align: center;">
@@ -346,11 +363,11 @@
                         <tbody formArrayName="AdditionalNonboardRows">
                             <tr *ngFor="let obj of additionalNonboardFormArr.controls; let i = index; let l = last"
                                 [formGroupName]="i">
-                                <td><input type="text" class="form-control" formControlName="name"
-                                        id="name"></td>
+                                <td><input type="text" class="form-control" formControlName="name" id="name"></td>
                             </tr>
                         </tbody>
                     </table>
+
 
                 </div>
             </form>
@@ -407,19 +424,19 @@
                                     <td><input type="text" class="form-control" formControlName="fund" id="fund"></td>
                                     <td><input type="text" class="form-control" formControlName="type" id="type"></td>
                                     <td><input test="text" class="form-control" formControlName="function"
-                                            id="function"></td>
+                                            id="function">
+                                    </td>
                                     <td><input type="text" class="form-control" formControlName="object" id="object">
                                     </td>
                                     <td><input type="text" class="form-control" formControlName="sub_object"
-                                            id="sub_object">
-                                    </td>
+                                            id="sub_object"></td>
                                     <td><input type="text" class="form-control" formControlName="location"
-                                            id="location"></td>
+                                            id="location">
+                                    </td>
                                     <td><input type="text" class="form-control" formControlName="year" id="year"></td>
                                     <td><input type="text" class="form-control" formControlName="pic" id="pic"></td>
                                     <td><input type="text" class="form-control" formControlName="department"
-                                            id="department">
-                                    </td>
+                                            id="department"></td>
                                     <td><input type="text" class="form-control" formControlName="grant" id="grant"></td>
                                     <td><input type="text" class="form-control" formControlName="funds" id="funds"></td>
                                     <td>
@@ -436,19 +453,23 @@
 
                                 <td colspan="10"></td>
                                 <td style="text-align:right">0</td>
-                                <td> <button type="button" class="btn btn-default btn-sm"
-                                        (click)="addNewRow('district fund')">
+                                <td> <button type="button" class="btn btn-default btn-sm" (click)="addNewRow('district fund')">
                                         <span class="glyphicon glyphicon-plus"></span>
                                     </button></td>
                             </tbody>
 
                         </table>
 
+
                     </div>
                 </form>
-
             </div>
-            <!--         
+
+            <hr>
+
+
+
+                    
         <hr>
 
         <div class="row mb-3">
@@ -522,69 +543,72 @@
             </table>
             <div class="subtext">For Transportation, Car Rental, and Other, please enter “N/A” in the Vendor Number and
                 Vendor Name Columns if missing this information to be allowed to submit.</div>
+
+               
         </div>
+        </div>
+
+
         <!-- additional checks needed  -->
-            <hr>
-            <div class="row mb-3">
-                <label for="additionalChecks">Additional Checks Needed</label>
-                <div class="col">
-                    <div class="form-check">
-                        <input class="form-check-input" name="additionalChecks" id="additionalChecksYes"
-                            type="radio">Yes
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-check">
-                        <input class="form-check-input" name="additionalChecks" id="additionalChecksNo" type="radio">No
-                    </div>
-
-                </div>
-                <div class="col" name="spacer"></div>
-                <div class="col" name="spacer"></div>
-                <div class="col" name="spacer"></div>
-                <div class="col" name="spacer"></div>
-
-            </div>
-
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="grandTotal"> Grand Total</label>
-                    <input type="text" class="form-control" placeholder="$0.00" id="grandTotal" disabled>
+        <hr>
+        <div class="row mb-3">
+            <label for="additionalChecks">Additional Checks Needed</label>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" name="additionalChecks" id="additionalChecksYes" type="radio">Yes
                 </div>
             </div>
-            <hr>
-            <div class="row mb-3">
-                <div class="col">
-                    <label for="comments">Comments</label>
-                    <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
+            <div class="col">
+                <div class="form-check">
+                    <input class="form-check-input" name="additionalChecks" id="additionalChecksNo" type="radio">No
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="subtext">Optional</div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="signature">Secretary's Signature</label>
-                <input type="text" class="form-control" placeholder="You're name counts as your signature">
 
             </div>
-            <div class="row mb-3">
-                <label for="documnets">Documents for this trip:</label>
-                <button>Choose Files</button>
+            <div class="col" name="spacer"></div>
+            <div class="col" name="spacer"></div>
+            <div class="col" name="spacer"></div>
+            <div class="col" name="spacer"></div>
 
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label for="grandTotal"> Grand Total</label>
+                <input type="text" class="form-control" placeholder="$0.00" id="grandTotal" disabled>
             </div>
-
-            <div class="row mb-3" style="text-align: center;">
-                <label for="checkList">Please see the <a href="assets/TravelRequestChecklist.pdf" target="_blank">Travel
-                        Request Checklist</a> Request Checklist before submitting.</label> -->
-
-
+        </div>
+        <hr>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="comments">Comments</label>
+                <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
             </div>
-            <div class="row mb-3">
-                <div class="col"> </div>
-                <div class="col"><button (click)="onSubmit()">Sumbit</button></div>
-            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="subtext">Optional</div>
+        </div>
+
+        <div class="row mb-3">
+            <label for="signature">Secretary's Signature</label>
+            <input type="text" class="form-control" placeholder="You're name counts as your signature">
+
+        </div>
+        <div class="row mb-3">
+            <label for="documnets">Documents for this trip:</label>
+            <button>Choose Files</button>
+
+        </div>
+
+        <div class="row mb-3" style="text-align: center;">
+            <label for="checkList">Please see the <a href="assets/TravelRequestChecklist.pdf" target="_blank">Travel
+                    Request Checklist</a> Request Checklist before submitting.</label>
 
 
         </div>
+        <div class="row mb-3">
+            <div class="col"> </div>
+            <div class="col"><button (click)="onSubmit()">Sumbit</button></div>
+        </div>
+
     </form>
+</div>

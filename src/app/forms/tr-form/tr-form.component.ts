@@ -41,80 +41,84 @@ export class TrFormComponent {
   number_of_students = new FormControl()
   number_of_nonboard = new FormControl()
 
-  //------------ All Table-like forms variables and functions.
+    ////////////////////////////      All Table-like forms variables and functions      //////////////////////////////////////.
 
-  additional_employees_submitted: any[] = [];
-  additional_employees_array: any[] = [];
-  additional_empoloyee_response!: FormGroup;
-  ADD_EMP_TABLE_NAME = "additional employee"
+    additional_employees_submitted: any[] = [];
+    additional_employees_array: any[] = [];
+    additional_empoloyee_response!: FormGroup;
+    ADD_EMP_TABLE_NAME = "additional employee"
+  
+    additional_boardmember_submitted: any[] = [];
+    additional_boardmember_array: any[] = [];
+    additional_boardmember_response!: FormGroup;
+    ADD_BOARD_TABLE_NAME = "additional boardmember"
+  
+    additional_students_submitted: any[] = [];
+    additional_students_array: any[] = [];
+    additional_students_response!: FormGroup;
+    ADD_STUDENTS_TABLE_NAME = "additional students"
+  
+    additional_nonboard_submitted: any[] = [];
+    additional_nonboard_array: any[] = [];
+    additional_nonboard_response!: FormGroup;
+    ADD_NONBOARD_TABLE_NAME = "additional nonboard"
+  
+    district_funds_required = new FormControl() // Yes/No radio buttons
+    district_funds_submitted: any[] = [];
+    district_funds_array: any[] = [];
+    dist_fund_response!: FormGroup;
+    DIST_FUND_TABLE_NAME = "district fund"  
 
-  additional_boardmember_submitted: any[] = [];
-  additional_boardmember_array: any[] = [];
-  additional_boardmember_response!: FormGroup;
-  ADD_BOARD_TABLE_NAME = "additional boardmember"
-
-  additional_students_submitted: any[] = [];
-  additional_students_array: any[] = [];
-  additional_students_response!: FormGroup;
-  ADD_STUDENTS_TABLE_NAME = "additional students"
-
-  additional_nonboard_submitted: any[] = [];
-  additional_nonboard_array: any[] = [];
-  additional_nonboard_response!: FormGroup;
-  ADD_NONBOARD_TABLE_NAME = "additional nonboard"
-
-  district_funds_required = new FormControl() // Yes/No radio buttons
-  district_funds_submitted: any[] = [];
-  district_funds_array: any[] = [];
-  dist_fund_response!: FormGroup;
-  DIST_FUND_TABLE_NAME = "district fund"  
-
-  // sets up dropdown lists and form tables.
   constructor(private formBuilder: FormBuilder) {
     this.create_dropdowns();
     this.createForms(); // init form data (all forms)
     this.initialData(); // set up form data (all forms)
+    
+    this.createDistrictFundForm(); // init form data
+
   }
 
-  // creates each table form.
-  createForms() {
-    this.additional_empoloyee_response = this.formBuilder.group({
-      AdditionalEmployeeRows: this.formBuilder.array([this.initRows(this.ADD_EMP_TABLE_NAME)])
-    })
+    // creates each table form.
+    createForms() {
+      this.additional_empoloyee_response = this.formBuilder.group({
+        AdditionalEmployeeRows: this.formBuilder.array([this.initRows(this.ADD_EMP_TABLE_NAME)])
+      })
+  
+      this.additional_boardmember_response = this.formBuilder.group({
+        AdditionalBoardmemberRows: this.formBuilder.array([this.initRows(this.ADD_BOARD_TABLE_NAME)])
+      })
+             
+  
+      this.additional_students_response = this.formBuilder.group({
+        AdditionalStudentsRows: this.formBuilder.array([this.initRows(this.ADD_STUDENTS_TABLE_NAME)])
+      })
+  
+      this.additional_nonboard_response = this.formBuilder.group({
+        AdditionalNonboardRows: this.formBuilder.array([this.initRows(this.ADD_NONBOARD_TABLE_NAME)])
+      })
+  
+      this.dist_fund_response = this.formBuilder.group({
+        DistFundRows: this.formBuilder.array([this.initRows(this.DIST_FUND_TABLE_NAME)]),
+      });
+    }
 
-    this.additional_boardmember_response = this.formBuilder.group({
-      AdditionalBoardmemberRows: this.formBuilder.array([this.initRows(this.ADD_BOARD_TABLE_NAME)])
-    })
-
-    this.additional_students_response = this.formBuilder.group({
-      AdditionalStudentsRows: this.formBuilder.array([this.initRows(this.ADD_STUDENTS_TABLE_NAME)])
-    })
-
-    this.additional_nonboard_response = this.formBuilder.group({
-      AdditionalNonboardRows: this.formBuilder.array([this.initRows(this.ADD_NONBOARD_TABLE_NAME)])
-    })
-
-    this.dist_fund_response = this.formBuilder.group({
-      DistFundRows: this.formBuilder.array([this.initRows(this.DIST_FUND_TABLE_NAME)]),
-    });
-  }
-
-  // getter functions (one for each table) to get the form controls
+      // getter functions (one for each table) to get the form controls
   get formArr() {
     return this.dist_fund_response.get('DistFundRows') as FormArray;
   }
 
   get additionalEmpFormArr() {
-    return this.additional_empoloyee_response.get('AdditionalEmployeeRows') as FormArray;
-  }
-
-  get additionalBoardmemberFormArr() {
-    return this.additional_boardmember_response.get('AdditionalBoardmemberRows') as FormArray;
+    return this.additional_empoloyee_response.get('AdditionalEmployeeRows') as FormArray; 
   }
 
   get additionalStudentsFormArr() {
     return this.additional_students_response.get('AdditionalStudentsRows') as FormArray;
   }
+
+  get additionalBoardmemberFormArr() {
+    return this.additional_boardmember_response.get('AdditionalBoardmemberRows') as FormArray;   
+  }
+
 
   get additionalNonboardFormArr() {
     return this.additional_nonboard_response.get('AdditionalNonboardRows') as FormArray;
@@ -237,8 +241,8 @@ export class TrFormComponent {
     return null
   }
 
-  // function to add a new row to a table. Used by the HTML, must have the table name
-  addNewRow(tablename) {
+   // function to add a new row to a table. Used by the HTML, must have the table name
+   addNewRow(tablename) {
     console.log(this.number_of_add_employees.value)
     if (tablename == this.DIST_FUND_TABLE_NAME) {
       let obj1 = {
@@ -317,7 +321,7 @@ export class TrFormComponent {
       }
     }
 
-  // function to delete a row from a table, but have the table name. 
+     // function to delete a row from a table, but have the table name. 
   deleteRow(index, tablename) {
     if (tablename == this.DIST_FUND_TABLE_NAME) {
       this.formArr.removeAt(index);
@@ -335,7 +339,51 @@ export class TrFormComponent {
       this.additionalNonboardFormArr.removeAt(index)
     }
   }
-//--------- end of all table form content
+///////////////////////////////////--------- end of all table form content-----------------//////////////////////////////////////////////////
+
+
+
+  ngOnInit(){
+    this.emplCountAddNum() 
+    this.studCountAddNum()
+  }
+
+  onlyNumbers(event):boolean{
+    const charCode = (event.which)?event.which: event.keyCode;
+    if(charCode >31 && (charCode <48 || charCode >57)){
+      return false;
+    }
+    return true;
+  }
+
+  createDistrictFundForm() {
+    this.dist_fund_response = this.formBuilder.group({
+      DistFundRows: this.formBuilder.array([this.initDistFundRows()]),
+    });
+  }
+
+
+
+  initDistFundRows() {
+    return this.formBuilder.group({
+      fund: [''],
+      type: [''],
+      function: [''],
+      object: [''],
+      sub_object: [''],
+      location: [''],
+      year: [''],
+      pic: [''],
+      department: [''],
+      grant: [''],
+      funds: [''],
+      dist_fund_response:['']
+    });
+  }
+
+ 
+
+ 
 
   // encapsulates all the data for easy printing and getting (I think)
   getAllData() {
@@ -377,18 +425,34 @@ export class TrFormComponent {
     return dataObject
   }
 
+
+
+
   onSubmit() {
     console.log(this.getAllData())
   }
 
+
   // ------------ Old Code -------------------
 
   // this makes the drop down 1-20 for employees and board members, and 1-300 for student additional travelers
-
   studCount= [];
+  studCountNum = 0;
+  numOfStudents = 0;
+
   emplCount = []; 
-  boardMembersTable = []; // not used?
-  nonBoardMembersTable = []; // not used?
+  emplCountNum = 0;
+  numOfEmployees = 0;
+
+
+  numOfBoardMembers = 0;
+  boardMembersTable = [];
+
+  
+
+
+  numOfNonBoardMembers = 0;
+  nonBoardMembersTable = [];
 
   create_dropdowns(){
     let counter = 0
@@ -403,172 +467,46 @@ export class TrFormComponent {
         counter++;
       }
     }
-  
 
-  // ------------ Old Code -------------------
+  studCountAddNum() {
+    while (this.studCount.length < 301) {
 
-  // selectNum = [];
-  // num = 0;
-  // selectNum2 = [];
-  // num2 = 0;
+      this.studCount.push(this.studCountNum)
+      this.studCountNum++;
+ 
+    }
+  }
 
-  // numOfEmployees = 0;
-  // employeeTable = [];
+  emplCountAddNum() {
+    while (this.emplCount.length < 21) {
 
-  // numOfBoardMembers = 0;
-  // boardMembersTable = [];
+      this.emplCount.push(this.emplCountNum)
+      this.emplCountNum++;
+      
+    }
+  }
 
-  // numOfStudents = 0;
-  // studentTable = [];
-
-  // numOfNonBoardMembers = 0;
-  // nonBoardMembersTable = [];
-
-  //  distFunds = 0;
-  // distFundsRow = 1;
-  // distFundsTable = []
-  // distFundsLoc = 0;
-
-  // // numAddEmployees:number;
-  // // numAddEmplOptions=this.selectNum;
-  // ngOnInit() {
-  //   this.selOption();
-  //   this.selOption2();
-  // }
-  // selOption() {
-  //   while (this.selectNum.length < 301) {
-
-  //     this.selectNum.push(this.num)
-  //     this.num++;
-  //     // console.log(this.num)
-  //   }
-  // }
-
-  // selOption2() {
-  //   while (this.selectNum2.length < 21) {
-
-  //     this.selectNum2.push(this.num2)
-  //     this.num2++;
-  //     // console.log(this.num)
-  //   }
-  // }
-
-  // numEmployees(value) {
-  //   this.numOfEmployees = value;
-  //   this.makeTableEmpl(this.numOfEmployees)
-  // }
-
-  // makeTableEmpl(value) {
-  //   let tableId = 1;
-  //   this.employeeTable = [];
-
-  //   for (let i = 0; i < value; i++) {
-  //     this.employeeTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
-
-  // numBoardMembers(value) {
-  //   this.numOfBoardMembers = value;
-  //   this.makeTableBoard(this.numOfBoardMembers)
-  //   // alert(this.numOfBoardMembers)
-  // }
+  numEmployees(value) {
+    this.numOfEmployees = value;
+   
+  }
 
 
 
-  // makeTableBoard(value) {
-  //   let tableId = 1;
-  //   this.boardMembersTable = [];
+  numBoardMembers(value) {
+    this.numOfBoardMembers = value;
 
-  //   for (let i = 0; i < value; i++) {
-  //     this.boardMembersTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
+  }
 
-  // numStudents(value) {
-  //   this.numOfStudents = value;
-  //   this.makeTableStudent(this.numOfStudents)
-  //   // alert(this.numOfStudents)
-  // }
+  numStudents(value) {
+    this.numOfStudents = value;
+   
+  }
 
-
-
-  // makeTableStudent(value) {
-  //   let tableId = 1;
-  //   this.studentTable = [];
-
-  //   for (let i = 0; i < value; i++) {
-  //     this.studentTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
-
-  // numNonBoardMembers(value) {
-  //   this.numOfNonBoardMembers = value;
-  //   this.makeTableNonBoard(this.numOfNonBoardMembers)
-  //   // alert(this.numOfNonBoardMembers)
-  // }
-
-
-
-  // makeTableNonBoard(value) {
-  //   let tableId = 1;
-  //   this.nonBoardMembersTable = [];
-
-  //   for (let i = 0; i < value; i++) {
-  //     this.nonBoardMembersTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
-
-  // districtFunds(bool) {
-  //   if (bool == 1) {
-  //     // this.distFundsRow = 1;
-  //     this.distFunds = 1;
-  //     // this.makeTableDistFunds();
-  //   }
-  //   else {
-  //     this.distFunds = 0;
-  //     // this.makeTableDistFunds();
-  //     // this.distFundsTable=[];
-  //     // this.distFundsRow = 0;
-  //   }
-  // alert(bool);
-  // }
-
-  // makeTableDistFunds() {
-  //   let tableRow = 1;
-  //   this.distFundsTable = [];
-
-  //   for (let i = 0; i < this.distFundsRow; i++) {
-  //     this.distFundsTable.push(tableRow);
-  //     tableRow++
-  //   }
-  //   // alert(this.distFundsTable)
-
-  // }
-
-  // addDistFunds() {
-  //   this.distFundsRow++;
-  //   this.distFundsLoc = this.distFundsRow
-  //   this.makeTableDistFunds();
-  //   // alert(this.distFundsTable)
-  // }
-
-  // removeDistFunds(i) {
-  //   delete this.distFundsTable[i - 1]
-  //   //  alert(this.distFundsTable[this.distFundsTable.length-1])
-
-  //   if (this.distFundsTable.length == 0) {
-  //     this.distFunds = 0
-  //   }
-
-  //   // alert(this.distFundsTable)
-  //   alert(this.secretary_num.value + " " + this.secretary_name.value + " " + this.secretary_email.value)
-
-  //   // alert(this.distFundsTable[this.distFundsTable.length-1])
-  // }
+  numNonBoardMembers(value) {
+    this.numOfNonBoardMembers = value;
+   
+  }
 
 
 }
