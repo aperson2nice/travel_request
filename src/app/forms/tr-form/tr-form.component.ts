@@ -247,6 +247,7 @@ export class TrFormComponent {
   }
 //--------- end of all table form content
 
+  // encapsulates all the data for easy printing and getting (I think)
   getAllData() {
     let dataObject = {
       now: this.now,
@@ -275,6 +276,9 @@ export class TrFormComponent {
       number_of_add_board: this.number_of_add_board.value,
       number_of_student: this.number_of_student.value,
       number_of_non_board: this.number_of_non_board.value,
+
+      additional_empoloyee_response: this.additional_empoloyee_response.value,
+      additional_boardmember_response: this.additional_boardmember_response,
 
       district_funds_required: this.district_funds_required.value,
       dist_fund_response: this.dist_fund_response.value
