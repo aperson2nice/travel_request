@@ -48,6 +48,11 @@ export class TrFormComponent {
   additional_empoloyee_response!: FormGroup;
   ADD_EMP_TABLE_NAME = "additional employee"
 
+  additional_boardmember_submitted: any[] = [];
+  additional_boardmember_array: any[] = [];
+  additional_boardmember_response!: FormGroup;
+  ADD_BOARD_TABLE_NAME = "additional boardmember"
+
   district_funds_required = new FormControl() // Yes/No radio buttons
   district_funds_submitted: any[] = [];
   district_funds_array: any[] = [];
@@ -66,6 +71,10 @@ export class TrFormComponent {
       AdditionalEmployeeRows: this.formBuilder.array([this.initRows(this.ADD_EMP_TABLE_NAME)])
     })
 
+    this.additional_boardmember_response = this.formBuilder.group({
+      AdditionalBoardmemberRows: this.formBuilder.array([this.initRows(this.ADD_BOARD_TABLE_NAME)])
+    })
+
     this.dist_fund_response = this.formBuilder.group({
       DistFundRows: this.formBuilder.array([this.initRows(this.DIST_FUND_TABLE_NAME)]),
     });
@@ -78,6 +87,10 @@ export class TrFormComponent {
 
   get additionalEmpFormArr() {
     return this.additional_empoloyee_response.get('AdditionalEmployeeRows') as FormArray;
+  }
+
+  get additionalBoardmemberFormArr() {
+    return this.additional_boardmember_response.get('AdditionalBoardmemberRows') as FormArray;
   }
 
   // initialization funciton, add if for other tables
@@ -104,19 +117,31 @@ export class TrFormComponent {
         vendor_number: [''],
         add_emp_response: ['']
       });
+    } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
+      return this.formBuilder.group({
+        board_name: [''],
+        board_email: [''],
+        add_board_response: ['']
+      });
     }
+
     return null
   }
 
   // add other tables
   initialData() {
-    this.district_funds_array.forEach((row) => {
-      this.formArr.push(this.addRow(row, this.DIST_FUND_TABLE_NAME));
-    });
-
     this.additional_employees_array.forEach((row) => {
       this.additionalEmpFormArr.push(this.addRow(row, this.ADD_EMP_TABLE_NAME))
     })
+
+    this.additional_boardmember_array.forEach((row) => {
+      this.additionalBoardmemberFormArr.push(this.addRow(row, this.ADD_BOARD_TABLE_NAME))
+    })
+
+    this.district_funds_array.forEach((row) => {
+      this.formArr.push(this.addRow(row, this.DIST_FUND_TABLE_NAME));
+    });
+    
   }
 
   // add if for other tables
@@ -142,9 +167,16 @@ export class TrFormComponent {
         employee_number: [obj.employee_number],
         name: [obj.name],
         vendor_number: [obj.function],
-        add_emp_response: [obj.vendor_number]
+        add_emp_response: [obj.add_emp_response]
+      });
+    } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
+      return this.formBuilder.group({
+        board_name: [obj.employee_number],
+        board_email: [obj.name],
+        add_emp_response: [obj.add_board_response]
       });
     }
+
     return null
   }
 
@@ -183,6 +215,21 @@ export class TrFormComponent {
           this.deleteRow(this.additionalEmpFormArr.length - 1, this.ADD_EMP_TABLE_NAME)
         }
       }
+    } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
+      if (this.additionalBoardmemberFormArr.length < this.number_of_add_board.value)
+        while (this.additionalBoardmemberFormArr.length < this.number_of_add_board.value) {
+          let obj1 = {
+            board_name: '',
+            board_email: '',
+            add_board_response: ''
+          };
+          this.additionalBoardmemberFormArr.push(this.addRow(obj1, this.ADD_BOARD_TABLE_NAME));
+        }
+      else if (this.additionalBoardmemberFormArr.length > this.number_of_add_board.value) {
+        while (this.additionalBoardmemberFormArr.length > this.number_of_add_board.value) {
+          this.deleteRow(this.additionalBoardmemberFormArr.length - 1, this.ADD_BOARD_TABLE_NAME)
+        }
+      }
     }
   }
 
@@ -193,6 +240,9 @@ export class TrFormComponent {
 
     } else if (tablename == this.ADD_EMP_TABLE_NAME) {
       this.additionalEmpFormArr.removeAt(index)
+
+    } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
+      this.additionalBoardmemberFormArr.removeAt(index)
     }
   }
 //--------- end of all table form content

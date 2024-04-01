@@ -222,7 +222,7 @@
 
                 <div class="col">
                     <label for="numBoard">Number of Additional Board Member Travelers </label>
-                    <select class="form-control" [formControl]="number_of_add_board" name="numBoard" id="numBoard">
+                    <select class="form-control" [formControl]="number_of_add_board" name="numBoard" id="numBoard" (change)="addNewRow('additional boardmember')">
                         <option *ngFor="let num2 of emplCount" [value]="num2">
                             {{num2}}
                         </option>
@@ -254,6 +254,7 @@
             <form [formGroup]="additional_empoloyee_response">
 
                 <div class="row mb-3" *ngIf="number_of_add_employees.value >= 1">
+
                     <table class="table">
                         <thead class="table-light" style="text-align: center;">
                             <tr>
@@ -262,11 +263,6 @@
                                 <th>Vendor Number</th>
                             </tr>
                         </thead>
-                        <!-- <tbody *ngFor="let i of employeeTable">
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                            <td><input type="text" class="form-control"></td>
-                        </tbody> -->
                         <tbody formArrayName="AdditionalEmployeeRows">
                             <tr *ngFor="let obj of additionalEmpFormArr.controls; let i = index; let l = last"
                                 [formGroupName]="i">
@@ -284,24 +280,28 @@
             </form>
             <!--//////////////////////////////////// if additional board memebers selected///////////////////////// -->
 
-            <!-- <div class="row mb-3" *ngIf="boardMembersTable.includes(1)">
+            <form [formGroup]="additional_boardmember_response">
+                <div class="row mb-3" *ngIf="number_of_add_board.value >= 1">
+            
+                    <table class="table">
+                        <thead class="table-light" style="text-align: center;">
+                            <tr>
+                                <th>Board Member Name</th>
+                                <th>Board Member Email</th>
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="AdditionalBoardmemberRows">
 
-                <table class="table">
-                    <thead class="table-light" style="text-align: center;">
-                        <tr>
-                            <th>Board Member Name</th>
-                            <th>Board Member Email</th>
-
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let i of boardMembersTable">
-
-                        <td><input type="text" class="form-control"></td>
-                        <td><input type="text" class="form-control"></td>
-
-                    </tbody>
-                </table>
-            </div> -->
+                            <tr *ngFor="let obj of additionalBoardmemberFormArr.controls; let i = index; let l = last"
+                                [formGroupName]="i">
+                                <td><input type="text" class="form-control" formControlName="board_name"
+                                        id="board_name"></td>
+                                <td><input type="text" class="form-control" formControlName="board_email" id="board_email"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+        </form>
             <!--//////////////////////////////////// if students are selected ///////////////////////// -->
 
             <!-- <div class="row mb-3" *ngIf="studentTable.includes(1)">
