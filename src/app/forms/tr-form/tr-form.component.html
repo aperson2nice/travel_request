@@ -21,7 +21,8 @@
 
 </div>
 
-<div class="container d-flex justify-content-center" style="padding-left:120px; padding-right:120px; padding-bottom:120px">
+<div class="container d-flex justify-content-center"
+    style="padding-left:120px; padding-right:120px; padding-bottom:120px">
 
     <!-- tr # and date -->
     <!-- <form [formGroup]="FeedBack" (ngSubmit)="onSubmit()"></form> -->
@@ -231,7 +232,7 @@
 
                 <div class="col">
                     <label for="requestDate">Number of Student <br>Travelers</label>
-                    <select class="form-control" [formControl]="number_of_student" name="numStudent" id="numStudent">
+                    <select class="form-control" [formControl]="number_of_students" name="numStudent" id="numStudent" (change)="addNewRow('additional students')">
                         <option *ngFor="let num of studCount" [value]="num">
                             {{num}}
                         </option>
@@ -241,7 +242,7 @@
 
                 <div class="col">
                     <label for="numNonBoard">Number of Non-Employee, <br> Non-Board Travelers </label>
-                    <select class="form-control" [formControl]="number_of_non_board" name="numNonBoard" id="numNonBoard">
+                    <select class="form-control" [formControl]="number_of_nonboard" name="numNonBoard" id="numNonBoard"  (change)="addNewRow('additional nonboard')">
                         <option *ngFor="let num2 of emplCount" [value]="num2">
                             {{num2}}
                         </option>
@@ -282,7 +283,7 @@
 
             <form [formGroup]="additional_boardmember_response">
                 <div class="row mb-3" *ngIf="number_of_add_board.value >= 1">
-            
+
                     <table class="table">
                         <thead class="table-light" style="text-align: center;">
                             <tr>
@@ -290,58 +291,69 @@
                                 <th>Board Member Email</th>
                             </tr>
                         </thead>
-                        <tbody formArrayName="AdditionalBoardmemberRows">
 
+                        <tbody formArrayName="AdditionalBoardmemberRows">
                             <tr *ngFor="let obj of additionalBoardmemberFormArr.controls; let i = index; let l = last"
                                 [formGroupName]="i">
-                                <td><input type="text" class="form-control" formControlName="board_name"
-                                        id="board_name"></td>
-                                <td><input type="text" class="form-control" formControlName="board_email" id="board_email"></td>
+                                <td><input type="text" class="form-control" formControlName="name"
+                                        id="name"></td>
+                                <td><input type="text" class="form-control" formControlName="email"
+                                        id="email"></td>
                             </tr>
                         </tbody>
                     </table>
+
                 </div>
-        </form>
+            </form>
             <!--//////////////////////////////////// if students are selected ///////////////////////// -->
+            <form [formGroup]="additional_students_response">
+                <div class="row mb-3" *ngIf="number_of_students.value >= 1">
 
-            <!-- <div class="row mb-3" *ngIf="studentTable.includes(1)">
+                    <table class="table">
+                        <thead class="table-light" style="text-align: center;">
+                            <tr>
+                                <th>#</th> <!-- is this id number? -->
+                                <th>Student Name</th>
+                            </tr>
+                        </thead>
 
-                <table class="table">
-                    <thead class="table-light" style="text-align: center;">
-                        <tr>
-                            <th>#</th>
-                            <th>Student Name</th>
+                        <tbody formArrayName="AdditionalStudentsRows">
+                            <tr *ngFor="let obj of additionalStudentsFormArr.controls; let i = index; let l = last"
+                                [formGroupName]="i">
+                                <td><input type="text" class="form-control" formControlName="id"
+                                        id="id"></td>
+                                <td><input type="text" class="form-control" formControlName="name"
+                                        id="name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let tableId of studentTable">
-
-
-                        <td class="form-control">{{tableId}}</td>
-                        <td><input type="text" class="form-control"></td>
-
-                    </tbody>
-                </table>
-            </div> -->
+                </div>
+            </form>
 
             <!--//////////////////////////////////// if additional non-board memebers selected///////////////////////// -->
 
-            <!-- <div class="row mb-3" *ngIf="nonBoardMembersTable.includes(1)">
+            <form [formGroup]="additional_nonboard_response">
+                <div class="row mb-3" *ngIf="number_of_nonboard.value >= 1">
 
-                <table class="table">
-                    <thead class="table-light" style="text-align: center;">
-                        <tr>
-                            <th>Non-Employee, Non-Board Member Name</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let i of nonBoardMembersTable">
+                    <table class="table">
+                        <thead class="table-light" style="text-align: center;">
+                            <tr>
+                                <th>Non-Employee, Non-Board Member Name</th>
+                            </tr>
+                        </thead>
 
-                        <td><input type="text" class="form-control"></td>
+                        <tbody formArrayName="AdditionalNonboardRows">
+                            <tr *ngFor="let obj of additionalNonboardFormArr.controls; let i = index; let l = last"
+                                [formGroupName]="i">
+                                <td><input type="text" class="form-control" formControlName="name"
+                                        id="name"></td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-
-                    </tbody>
-                </table>
-            </div> -->
+                </div>
+            </form>
 
             <hr>
             <!-- //////////////////////////////////////district funds required  //////////////////////////////-->
@@ -399,13 +411,15 @@
                                     <td><input type="text" class="form-control" formControlName="object" id="object">
                                     </td>
                                     <td><input type="text" class="form-control" formControlName="sub_object"
-                                            id="sub_object"></td>
+                                            id="sub_object">
+                                    </td>
                                     <td><input type="text" class="form-control" formControlName="location"
                                             id="location"></td>
                                     <td><input type="text" class="form-control" formControlName="year" id="year"></td>
                                     <td><input type="text" class="form-control" formControlName="pic" id="pic"></td>
                                     <td><input type="text" class="form-control" formControlName="department"
-                                            id="department"></td>
+                                            id="department">
+                                    </td>
                                     <td><input type="text" class="form-control" formControlName="grant" id="grant"></td>
                                     <td><input type="text" class="form-control" formControlName="funds" id="funds"></td>
                                     <td>

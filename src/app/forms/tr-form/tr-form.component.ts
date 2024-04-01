@@ -38,8 +38,8 @@ export class TrFormComponent {
 
   number_of_add_employees = new FormControl()
   number_of_add_board = new FormControl()
-  number_of_student = new FormControl()
-  number_of_non_board = new FormControl()
+  number_of_students = new FormControl()
+  number_of_nonboard = new FormControl()
 
   //------------ All Table-like forms variables and functions.
 
@@ -52,6 +52,16 @@ export class TrFormComponent {
   additional_boardmember_array: any[] = [];
   additional_boardmember_response!: FormGroup;
   ADD_BOARD_TABLE_NAME = "additional boardmember"
+
+  additional_students_submitted: any[] = [];
+  additional_students_array: any[] = [];
+  additional_students_response!: FormGroup;
+  ADD_STUDENTS_TABLE_NAME = "additional students"
+
+  additional_nonboard_submitted: any[] = [];
+  additional_nonboard_array: any[] = [];
+  additional_nonboard_response!: FormGroup;
+  ADD_NONBOARD_TABLE_NAME = "additional nonboard"
 
   district_funds_required = new FormControl() // Yes/No radio buttons
   district_funds_submitted: any[] = [];
@@ -75,6 +85,14 @@ export class TrFormComponent {
       AdditionalBoardmemberRows: this.formBuilder.array([this.initRows(this.ADD_BOARD_TABLE_NAME)])
     })
 
+    this.additional_students_response = this.formBuilder.group({
+      AdditionalStudentsRows: this.formBuilder.array([this.initRows(this.ADD_STUDENTS_TABLE_NAME)])
+    })
+
+    this.additional_nonboard_response = this.formBuilder.group({
+      AdditionalNonboardRows: this.formBuilder.array([this.initRows(this.ADD_NONBOARD_TABLE_NAME)])
+    })
+
     this.dist_fund_response = this.formBuilder.group({
       DistFundRows: this.formBuilder.array([this.initRows(this.DIST_FUND_TABLE_NAME)]),
     });
@@ -91,6 +109,14 @@ export class TrFormComponent {
 
   get additionalBoardmemberFormArr() {
     return this.additional_boardmember_response.get('AdditionalBoardmemberRows') as FormArray;
+  }
+
+  get additionalStudentsFormArr() {
+    return this.additional_students_response.get('AdditionalStudentsRows') as FormArray;
+  }
+
+  get additionalNonboardFormArr() {
+    return this.additional_nonboard_response.get('AdditionalNonboardRows') as FormArray;
   }
 
   // initialization funciton, add if for other tables
@@ -119,9 +145,20 @@ export class TrFormComponent {
       });
     } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
       return this.formBuilder.group({
-        board_name: [''],
-        board_email: [''],
+        name: [''],
+        email: [''],
         add_board_response: ['']
+      });
+    } else if (tablename == this.ADD_STUDENTS_TABLE_NAME) {
+      return this.formBuilder.group({
+        id: [''],
+        name: [''],
+        add_student_response: ['']
+      });
+    } else if (tablename == this.ADD_NONBOARD_TABLE_NAME) {
+      return this.formBuilder.group({
+        name: [''],
+        add_nonboard_response: ['']
       });
     }
 
@@ -136,6 +173,14 @@ export class TrFormComponent {
 
     this.additional_boardmember_array.forEach((row) => {
       this.additionalBoardmemberFormArr.push(this.addRow(row, this.ADD_BOARD_TABLE_NAME))
+    })
+
+    this.additional_students_array.forEach((row) => {
+      this.additionalStudentsFormArr.push(this.addRow(row, this.ADD_STUDENTS_TABLE_NAME))
+    })
+
+    this.additional_nonboard_array.forEach((row) => {
+      this.additionalNonboardFormArr.push(this.addRow(row, this.ADD_NONBOARD_TABLE_NAME))
     })
 
     this.district_funds_array.forEach((row) => {
@@ -171,9 +216,20 @@ export class TrFormComponent {
       });
     } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
       return this.formBuilder.group({
-        board_name: [obj.employee_number],
-        board_email: [obj.name],
-        add_emp_response: [obj.add_board_response]
+        name: [obj.number],
+        email: [obj.email],
+        add_board_response: [obj.add_board_response]
+      });
+    } else if (tablename == this.ADD_STUDENTS_TABLE_NAME) {
+      return this.formBuilder.group({
+        id: [obj.id],
+        name: [obj.name],
+        add_student_response: [obj.add_student_response]
+      });
+    } else if (tablename == this.ADD_NONBOARD_TABLE_NAME) {
+      return this.formBuilder.group({
+        name: [obj.name],
+        add_nonboard_response: [obj.add_nonboard_response]
       });
     }
 
@@ -209,29 +265,56 @@ export class TrFormComponent {
             add_emp_response: ''
           };
           this.additionalEmpFormArr.push(this.addRow(obj1, this.ADD_EMP_TABLE_NAME));
-        }
-      else if (this.additionalEmpFormArr.length > this.number_of_add_employees.value) {
+        } else if (this.additionalEmpFormArr.length > this.number_of_add_employees.value) {
         while (this.additionalEmpFormArr.length > this.number_of_add_employees.value) {
           this.deleteRow(this.additionalEmpFormArr.length - 1, this.ADD_EMP_TABLE_NAME)
         }
       }
+
     } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
-      if (this.additionalBoardmemberFormArr.length < this.number_of_add_board.value)
-        while (this.additionalBoardmemberFormArr.length < this.number_of_add_board.value) {
-          let obj1 = {
-            board_name: '',
-            board_email: '',
-            add_board_response: ''
-          };
-          this.additionalBoardmemberFormArr.push(this.addRow(obj1, this.ADD_BOARD_TABLE_NAME));
+        if (this.additionalBoardmemberFormArr.length < this.number_of_add_board.value)
+          while (this.additionalBoardmemberFormArr.length < this.number_of_add_board.value) {
+            let obj1 = {
+              name: '',
+              email: '',
+              add_board_response: ''
+            };
+            this.additionalBoardmemberFormArr.push(this.addRow(obj1, this.ADD_BOARD_TABLE_NAME));
+          } else if (this.additionalBoardmemberFormArr.length > this.number_of_add_board.value) {
+          while (this.additionalBoardmemberFormArr.length > this.number_of_add_board.value) {
+            this.deleteRow(this.additionalBoardmemberFormArr.length - 1, this.ADD_BOARD_TABLE_NAME)
+          }
         }
-      else if (this.additionalBoardmemberFormArr.length > this.number_of_add_board.value) {
-        while (this.additionalBoardmemberFormArr.length > this.number_of_add_board.value) {
-          this.deleteRow(this.additionalBoardmemberFormArr.length - 1, this.ADD_BOARD_TABLE_NAME)
+
+      } else if (tablename == this.ADD_STUDENTS_TABLE_NAME) {
+        if (this.additionalStudentsFormArr.length < this.number_of_students.value)
+          while (this.additionalStudentsFormArr.length < this.number_of_students.value) {
+            let obj1 = {
+              id: '',
+              name: '',
+              add_students_response: ''
+            };
+            this.additionalStudentsFormArr.push(this.addRow(obj1, this.ADD_STUDENTS_TABLE_NAME));
+          } else if (this.additionalStudentsFormArr.length > this.number_of_students.value) {
+          while (this.additionalStudentsFormArr.length > this.number_of_students.value) {
+            this.deleteRow(this.additionalStudentsFormArr.length - 1, this.ADD_STUDENTS_TABLE_NAME)
+          }
+        }
+      } else if (tablename == this.ADD_NONBOARD_TABLE_NAME) {
+        if (this.additionalNonboardFormArr.length < this.number_of_nonboard.value)
+          while (this.additionalNonboardFormArr.length < this.number_of_nonboard.value) {
+            let obj1 = {
+              name: '',
+              add_nonboard_response: ''
+            };
+            this.additionalNonboardFormArr.push(this.addRow(obj1, this.ADD_NONBOARD_TABLE_NAME));
+          } else if (this.additionalNonboardFormArr.length > this.number_of_nonboard.value) {
+          while (this.additionalNonboardFormArr.length > this.number_of_nonboard.value) {
+            this.deleteRow(this.additionalNonboardFormArr.length - 1, this.ADD_NONBOARD_TABLE_NAME)
+          }
         }
       }
     }
-  }
 
   // add if for other tables
   deleteRow(index, tablename) {
@@ -241,8 +324,14 @@ export class TrFormComponent {
     } else if (tablename == this.ADD_EMP_TABLE_NAME) {
       this.additionalEmpFormArr.removeAt(index)
 
+    } else if (tablename == this.ADD_STUDENTS_TABLE_NAME) {
+      this.additionalStudentsFormArr.removeAt(index)
+
     } else if (tablename == this.ADD_BOARD_TABLE_NAME) {
       this.additionalBoardmemberFormArr.removeAt(index)
+
+    } else if (tablename == this.ADD_NONBOARD_TABLE_NAME) {
+      this.additionalNonboardFormArr.removeAt(index)
     }
   }
 //--------- end of all table form content
@@ -274,9 +363,10 @@ export class TrFormComponent {
 
       number_of_add_employees: this.number_of_add_employees.value,
       number_of_add_board: this.number_of_add_board.value,
-      number_of_student: this.number_of_student.value,
-      number_of_non_board: this.number_of_non_board.value,
+      number_of_student: this.number_of_students.value,
+      number_of_non_board: this.number_of_nonboard.value,
 
+      // add all forms table responses here
       additional_empoloyee_response: this.additional_empoloyee_response.value,
       additional_boardmember_response: this.additional_boardmember_response,
 
