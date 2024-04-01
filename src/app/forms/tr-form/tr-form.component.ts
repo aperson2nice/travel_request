@@ -69,13 +69,14 @@ export class TrFormComponent {
   dist_fund_response!: FormGroup;
   DIST_FUND_TABLE_NAME = "district fund"  
 
+  // sets up dropdown lists and form tables.
   constructor(private formBuilder: FormBuilder) {
     this.create_dropdowns();
     this.createForms(); // init form data (all forms)
     this.initialData(); // set up form data (all forms)
   }
 
-  // add other tables here
+  // creates each table form.
   createForms() {
     this.additional_empoloyee_response = this.formBuilder.group({
       AdditionalEmployeeRows: this.formBuilder.array([this.initRows(this.ADD_EMP_TABLE_NAME)])
@@ -119,7 +120,7 @@ export class TrFormComponent {
     return this.additional_nonboard_response.get('AdditionalNonboardRows') as FormArray;
   }
 
-  // initialization funciton, add if for other tables
+  // initialize the rows of the data tables
   initRows(tablename) {
     if (tablename == this.DIST_FUND_TABLE_NAME) {
       return this.formBuilder.group({
@@ -165,7 +166,7 @@ export class TrFormComponent {
     return null
   }
 
-  // add other tables
+  // initialize blank tables and add rows with blank data.
   initialData() {
     this.additional_employees_array.forEach((row) => {
       this.additionalEmpFormArr.push(this.addRow(row, this.ADD_EMP_TABLE_NAME))
@@ -189,7 +190,7 @@ export class TrFormComponent {
     
   }
 
-  // add if for other tables
+  // Use by typescript to add a row. 
   addRow(obj, tablename) {
     if (tablename == this.DIST_FUND_TABLE_NAME) {
       return this.formBuilder.group({
@@ -236,7 +237,7 @@ export class TrFormComponent {
     return null
   }
 
-  // add if for other tables
+  // function to add a new row to a table. Used by the HTML, must have the table name
   addNewRow(tablename) {
     console.log(this.number_of_add_employees.value)
     if (tablename == this.DIST_FUND_TABLE_NAME) {
@@ -316,7 +317,7 @@ export class TrFormComponent {
       }
     }
 
-  // add if for other tables
+  // function to delete a row from a table, but have the table name. 
   deleteRow(index, tablename) {
     if (tablename == this.DIST_FUND_TABLE_NAME) {
       this.formArr.removeAt(index);
