@@ -41,170 +41,169 @@ export class TrFormComponent {
   number_of_student = new FormControl()
   number_of_non_board = new FormControl()
 
-  //------------ All Table-like forms variables and functions.
-
-  additional_employees_submitted: any[] = [];
-  additional_employees_array: any[] = [];
-  additional_empoloyee_response!: FormGroup;
-  ADD_EMP_TABLE_NAME = "additional employee"
-
-  district_funds_required = new FormControl() // Yes/No radio buttons
-  district_funds_submitted: any[] = [];
-  district_funds_array: any[] = [];
-  dist_fund_response!: FormGroup;
-  DIST_FUND_TABLE_NAME = "district fund"  
+  district_funds_required = new FormControl()
 
   constructor(private formBuilder: FormBuilder) {
-    this.create_dropdowns();
-    this.createForms(); // init form data (all forms)
-    this.initialData(); // set up form data (all forms)
+    this.createDistrictFundForm(); // init form data
+    this.initialDistrictFundsData(); // setting up the question array data into form.
+
+    this.createAdditionalEmployeesForm(); // init form data
+    this.initialAdditionalEmployeeData(); // setting up the question array data into form.
   }
 
-  // add other tables here
-  createForms() {
-    this.additional_empoloyee_response = this.formBuilder.group({
-      AdditionalEmployeeRows: this.formBuilder.array([this.initRows(this.ADD_EMP_TABLE_NAME)])
-    })
+  // -------- Start of Additional Employees table functions
+  additional_employees_submitted: any[] = [];
 
-    this.dist_fund_response = this.formBuilder.group({
-      DistFundRows: this.formBuilder.array([this.initRows(this.DIST_FUND_TABLE_NAME)]),
+  additional_employees_array: any[] = [];
+  add_emp_response!: FormGroup;
+
+  createAdditionalEmployeesForm() {
+    this.add_emp_response = this.formBuilder.group({
+      AddEmpRows: this.formBuilder.array([this.initAddEmpRows()]),
     });
   }
 
-  // getter functions (one for each table) to get the form controls
-  get formArr() {
-    return this.dist_fund_response.get('DistFundRows') as FormArray;
+  //getter function ease up to get the form controls
+  get addEmployeeFormArr() {
+    return this.add_emp_response.get('AddEmpRows') as FormArray;
   }
 
-  get additionalEmpFormArr() {
-    return this.additional_empoloyee_response.get('AdditionalEmployeeRows') as FormArray;
-  }
-
-  // initialization funciton, add if for other tables
-  initRows(tablename) {
-    if (tablename == this.DIST_FUND_TABLE_NAME) {
-      return this.formBuilder.group({
-        fund: [''],
-        type: [''],
-        function: [''],
-        object: [''],
-        sub_object: [''],
-        location: [''],
-        year: [''],
-        pic: [''],
-        department: [''],
-        grant: [''],
-        funds: [''],
-        dist_fund_response: ['']
-      });
-    } else if (tablename == this.ADD_EMP_TABLE_NAME) {
-      return this.formBuilder.group({
-        employee_number: [''],
-        name: [''],
-        vendor_number: [''],
-        add_emp_response: ['']
-      });
-    }
-    return null
-  }
-
-  // add other tables
-  initialData() {
-    this.district_funds_array.forEach((row) => {
-      this.formArr.push(this.addRow(row, this.DIST_FUND_TABLE_NAME));
+  initAddEmpRows() {
+    return this.formBuilder.group({
+      employee_number: [''],
+      name: [''],
+      vendor_number: [''],
+      add_emp_response:['']
     });
+  }
 
+  initialAdditionalEmployeeData() {
     this.additional_employees_array.forEach((row) => {
-      this.additionalEmpFormArr.push(this.addRow(row, this.ADD_EMP_TABLE_NAME))
-    })
+      this.addEmployeeFormArr.push(this.addRowToAdditionalEmployeesForm(row));
+    });
   }
 
-  // add if for other tables
-  addRow(obj, tablename) {
-    if (tablename == this.DIST_FUND_TABLE_NAME) {
-      return this.formBuilder.group({
-        fund: [obj.fund],
-        type: [obj.type],
-        function: [obj.function],
-        object: [obj.object],
-        sub_object: [obj.sub_object],
-        location: [obj.location],
-        year: [obj.year],
-        pic: [obj.pic],
-        department: [obj.department],
-        grant: [obj.grant],
-        funds: [obj.funds],
-        dist_fund_response: [obj.dist_fund_response]
-      });
-
-    } else if (tablename == this.ADD_EMP_TABLE_NAME) {
-      return this.formBuilder.group({
-        employee_number: [obj.employee_number],
-        name: [obj.name],
-        vendor_number: [obj.function],
-        add_emp_response: [obj.vendor_number]
-      });
-    }
-    return null
+  addRowToAdditionalEmployeesForm(obj) {
+    return this.formBuilder.group({
+      employee_number: [obj.employee_number],
+      name: [obj.name],
+      vendor_number: [obj.function],
+      add_emp_response: [obj.vendor_number]
+    });
   }
 
-  // add if for other tables
-  addNewRow(tablename) {
-    console.log(this.number_of_add_employees.value)
-    if (tablename == this.DIST_FUND_TABLE_NAME) {
-      let obj1 = {
-        fund: '',
-        type: '',
-        function: '',
-        object: '',
-        sub_object: '',
-        location: '',
-        year: '',
-        pic: '',
-        department: '',
-        grant: '',
-        funds: ''
-      };
-      this.formArr.push(this.addRow(obj1, this.DIST_FUND_TABLE_NAME));
-
-    } else if (tablename == this.ADD_EMP_TABLE_NAME) {
-      if (this.additionalEmpFormArr.length < this.number_of_add_employees.value)
-        while (this.additionalEmpFormArr.length < this.number_of_add_employees.value) {
-          let obj1 = {
-            employee_number: '',
-            name: '',
-            vendor_number: '',
-            add_emp_response: ''
-          };
-          this.additionalEmpFormArr.push(this.addRow(obj1, this.ADD_EMP_TABLE_NAME));
-        }
-      else if (this.additionalEmpFormArr.length > this.number_of_add_employees.value) {
-        while (this.additionalEmpFormArr.length > this.number_of_add_employees.value) {
-          this.deleteRow(this.additionalEmpFormArr.length - 1, this.ADD_EMP_TABLE_NAME)
-        }
+  addNewRowToAdditionalEmployeesForm(numOfRowsToAdd) {
+    if (this.addEmployeeFormArr.length < numOfRowsToAdd)
+      while (this.addEmployeeFormArr.length < numOfRowsToAdd) {
+        let obj1 = {
+          employee_number: '',
+          name: '',
+          vendor_number: '',
+          add_emp_response: ''
+        };
+        this.addEmployeeFormArr.push(this.addRowToAdditionalEmployeesForm(obj1));
+      } 
+    else if (this.addEmployeeFormArr.length > numOfRowsToAdd) {
+      while (this.addEmployeeFormArr.length > numOfRowsToAdd) {
+        this.deleteRowFromAdditionalEmployeesForm(this.addEmployeeFormArr.length - 1)
       }
     }
   }
 
-  // add if for other tables
-  deleteRow(index, tablename) {
-    if (tablename == this.DIST_FUND_TABLE_NAME) {
-      this.formArr.removeAt(index);
-
-    } else if (tablename == this.ADD_EMP_TABLE_NAME) {
-      this.additionalEmpFormArr.removeAt(index)
-    }
+  deleteRowFromAdditionalEmployeesForm(index: number) {
+    this.addEmployeeFormArr.removeAt(index);
   }
-//--------- end of all table form content
+  // --------- end Additional Employees Form functions
 
-  getAllData() {
+  // -------- Start of District Funds Forms functions
+  district_funds_submitted: any[] = [];
+
+  district_funds_array: any[] = [];
+  dist_fund_response!: FormGroup;
+
+  createDistrictFundForm() {
+    this.dist_fund_response = this.formBuilder.group({
+      DistFundRows: this.formBuilder.array([this.initDistFundRows()]),
+    });
+  }
+
+  //getter function ease up to get the form controls
+  get formArr() {
+    return this.dist_fund_response.get('DistFundRows') as FormArray;
+  }
+
+  initDistFundRows() {
+    return this.formBuilder.group({
+      fund: [''],
+      type: [''],
+      function: [''],
+      object: [''],
+      sub_object: [''],
+      location: [''],
+      year: [''],
+      pic: [''],
+      department: [''],
+      grant: [''],
+      funds: [''],
+      dist_fund_response:['']
+    });
+  }
+
+  initialDistrictFundsData() {
+    this.district_funds_array.forEach((row) => {
+      this.formArr.push(this.addRowToDistrictFundForm(row));
+    });
+  }
+
+  addRowToDistrictFundForm(obj) {
+    return this.formBuilder.group({
+      fund: [obj.fund],
+      type: [obj.type],
+      function: [obj.function],
+      object: [obj.object],
+      sub_object: [obj.sub_object],
+      location: [obj.location],
+      year: [obj.year],
+      pic: [obj.pic],
+      department: [obj.department],
+      grant: [obj.grant],
+      funds: [obj.funds],
+      dist_fund_response: [obj.dist_fund_response]
+    });
+  }
+
+  addNewRowToDistrictFundForm() {
+    let obj1 = {
+      fund: '',
+      type: '',
+      function: '',
+      object: '',
+      sub_object: '',
+      location: '',
+      year: '',
+      pic: '',
+      department: '',
+      grant: '',
+      funds: ''
+    };
+    this.formArr.push(this.addRowToDistrictFundForm(obj1));
+  }
+
+  deleteRowFromDistrictFundForm(index: number) {
+    this.formArr.removeAt(index);
+  }
+  // --------- end District Funds Form functions
+
+
+  // used to get all the data from the form
+  getAllData(){
     let dataObject = {
       now: this.now,
       datetime: this.datetime,
       date: this.date,
 
       secretary_num: this.secretary_num.value,
-      secretary_name: this.secretary_name.value,
+      secretary_name: this.secretary_name.value, 
       secretary_email: this.secretary_email.value,
 
       traveler_emp_num: this.primary_traveler_emp_num.value,
@@ -212,21 +211,21 @@ export class TrFormComponent {
       primary_traveler_name: this.primary_traveler_name.value,
 
       departure_date: this.departure_date.value,
-      departure_time: this.departure_time.value,
-      return_date: this.return_date.value,
-      return_time: this.return_time.value,
-      destination_city: this.destination_city.value,
-      destination_state: this.destination_state.value,
+      departure_time : this.departure_time.value,
+      return_date : this.return_date.value,
+      return_time : this.return_time.value,
+      destination_city : this.destination_city.value,
+      destination_state : this.destination_state.value,
 
-      travel_purpose: this.travel_purpose.value,
-      travel_justification: this.travel_justification.value,
+      travel_purpose : this.travel_purpose.value,
+      travel_justification : this.travel_justification.value,
 
-      number_of_add_employees: this.number_of_add_employees.value,
-      number_of_add_board: this.number_of_add_board.value,
-      number_of_student: this.number_of_student.value,
-      number_of_non_board: this.number_of_non_board.value,
+      number_of_add_employees : this.number_of_add_employees.value,
+      number_of_add_board : this.number_of_add_board.value,
+      number_of_student : this.number_of_student.value,
+      number_of_non_board : this.number_of_non_board.value,
 
-      district_funds_required: this.district_funds_required.value,
+      district_funds_required : this.district_funds_required.value,
       dist_fund_response: this.dist_fund_response.value
     }
     return dataObject
@@ -236,29 +235,6 @@ export class TrFormComponent {
     console.log(this.getAllData())
   }
 
-  // ------------ Old Code -------------------
-
-  // this makes the drop down 1-20 for employees and board members, and 1-300 for student additional travelers
-
-  studCount= [];
-  emplCount = []; 
-  boardMembersTable = []; // not used?
-  nonBoardMembersTable = []; // not used?
-
-  create_dropdowns(){
-    let counter = 0
-      while (this.studCount.length < 301) {
-        this.studCount.push(counter)
-        counter++;
-      }
-
-      counter = 0
-      while (this.emplCount.length < 21) {
-        this.emplCount.push(counter)
-        counter++;
-      }
-    }
-  
 
   // ------------ Old Code -------------------
 
@@ -389,7 +365,7 @@ export class TrFormComponent {
   //     // this.distFundsTable=[];
   //     // this.distFundsRow = 0;
   //   }
-  // alert(bool);
+    // alert(bool);
   // }
 
   // makeTableDistFunds() {
