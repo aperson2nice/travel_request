@@ -3,13 +3,13 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  </head>
+</head>
 <div class="container d-flex justify-content-center align-items-center" style="padding:60px;">
 
     <div class="col">
         <img src="assets/sisdlogo2.png" style="width: 200px" alt="sisdlogo">
     </div>
-    <div class="col">å
+    <div class="col">
 
         <div class="title">
             Travel Request
@@ -17,11 +17,13 @@
     </div>
     <div class="col" id="spacer">
     </div>
-Å
+
+
 
 </div>
 
-<div class="container d-flex justify-content-center" style="padding-left:120px; padding-right:120px; padding-bottom:120px">
+<div class="container d-flex justify-content-center"
+    style="padding-left:120px; padding-right:120px; padding-bottom:120px">
 
     <!-- tr # and date -->
     <!-- <form [formGroup]="FeedBack" (ngSubmit)="onSubmit()"></form> -->
@@ -42,55 +44,63 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="secretaryEmplNumber">Secretary Employee Number</label>
-                <input type="text" class="form-control" [formControl]="secretary_num" placeholder="Only Secretaries may submit this form"
-                    id="employeId">
+                <input type="text" class="form-control" [formControl]="secretary_num"
+                    placeholder="Only Secretaries may submit this form" id="employeId">
             </div>
 
             <div class="col">
                 <label for="inputEmail">Secretary Name</label>
-                <input type="text" class="form-control" [formControl]="secretary_name" placeholder="" id="secretaryName">
+                <input type="text" class="form-control" [formControl]="secretary_name" placeholder=""
+                    id="secretaryName">
 
             </div>
 
             <div class="col">
                 <label for="inputEmail">Secretary Email</label>
-                <input type="text" class="form-control" [formControl]="secretary_email" placeholder="email" id="seretaryEmail">
+                <input type="text" class="form-control" [formControl]="secretary_email" placeholder="email"
+                    id="seretaryEmail">
             </div>
 
         </div>
         <br>
         <!-- board of trustees -->
-        <div>
+        <!-- <div> -->
+
+
+        <div class="row mb-3">
+            <div class="col">
+                <input type="checkbox" id="boardOfTrustees" (change)="true" #checkBox> <label for="boardTravell">Board
+                    of
+                    Trustees Travel</label>
+            </div>
+        </div>
+        <div *ngIf="!checkBox.checked">
+            <!-- primary traveler -->
             <div class="row mb-3">
                 <div class="col">
-                    <input type="checkbox" id="boardOfTrustees" class="label" (change)="true" #checkBox> Board of
-                    Trustees Travel
-                </div>
-            </div>
-            <div *ngIf="!checkBox.checked">
-                <!-- primary traveler -->
-                <div class="row mb-3">
-                    <div class="col">
-                        <label for="secretaryEmplNumber">Primary Traveler Employee #</label>
-                        <input type="text" class="form-control" [formControl]="primary_traveler_emp_num" placeholder="Enter #" id="employeId">
-
-                    </div>
-
-                    <div class="col">
-                        <label for="inputEmail">Primary Traveler Vendor #</label>
-                        <input type="text" class="form-control" [formControl]="primary_traveler_vend_num" placeholder="" id="Enter #">
-
-                    </div>
-
-                    <div class="col">
-                        <label for="inputEmail">Primary Traveler Name</label>
-                        <input type="text" class="form-control" [formControl]="primary_traveler_name" placeholder="" id="primaryName">
-                    </div>
+                    <label for="secretaryEmplNumber">Primary Traveler Employee #</label>
+                    <input type="text" class="form-control" [formControl]="primary_traveler_emp_num"
+                        placeholder="Enter #" id="employeId">
 
                 </div>
-            </div>
 
+                <div class="col">
+                    <label for="inputEmail">Primary Traveler Vendor #</label>
+                    <input type="text" class="form-control" [formControl]="primary_traveler_vend_num" placeholder=""
+                        id="Enter #">
+
+                </div>
+
+                <div class="col">
+                    <label for="inputEmail">Primary Traveler Name</label>
+                    <input type="text" class="form-control" [formControl]="primary_traveler_name" placeholder=""
+                        id="primaryName">
+                </div>
+
+            </div>
         </div>
+
+        <!-- </div> -->
         <hr>
 
 
@@ -100,13 +110,14 @@
             <div class="col">
                 <label for="secretaryEmplNumber">Departure Date/Time</label>
                 <input type="date" class="form-control" [formControl]="departure_date" placeholder="" id="depatureDate">
-                <input type="time" class="form-control" [formControl]="departure_time"  placeholder="" id="depatureTime">
+                <input type="time" class="form-control" [formControl]="departure_time" placeholder="" id="depatureTime">
             </div>
 
             <div class="col">
                 <label for="inputEmail">Return Date/Time</label>
-                <input type="date" class="form-control" [formControl]="return_date" placeholder="Must be after departure date" id="returnDate">
-                <input type="time" class="form-control" [formControl]="return_time"  placeholder="" id="returnTime">
+                <input type="date" class="form-control" [formControl]="return_date"
+                    placeholder="Must be after departure date" id="returnDate">
+                <input type="time" class="form-control" [formControl]="return_time" placeholder="" id="returnTime">
 
             </div>
 
@@ -117,7 +128,8 @@
 
             <div class="col">
                 <label for="destinationCity">Destination State</label>
-                <select type="text" class="form-control" [formControl]="destination_state"  placeholder="" name="state" id="state">
+                <select type="text" class="form-control" [formControl]="destination_state" placeholder="" name="state"
+                    id="state">
                     <option value="">N/A</option>
                     <option value="AK">Alaska</option>
                     <option value="AL">Alabama</option>
@@ -178,7 +190,8 @@
         <div class="row mb-3">
             <div class="col">
                 <label for="travelPurpose">Travel Purpose</label>
-                <textarea class="form-control" [formControl]="travel_purpose" name="travelPurpose" id="travelPurpose" rows="3"></textarea>
+                <textarea class="form-control" [formControl]="travel_purpose" name="travelPurpose" id="travelPurpose"
+                    rows="3"></textarea>
             </div>
         </div>
 
@@ -187,14 +200,15 @@
                 <label for="travelJustification">Travel Justification - Brief description of how this
                     trip is necessary
                     to accomplish the goals/mission/directives of the District or the grant.</label>
-                <textarea class="form-control" [formControl]="travel_justification"  name="travelJustification" id="travelJustification" rows="3"></textarea>
+                <textarea class="form-control" [formControl]="travel_justification" name="travelJustification"
+                    id="travelJustification" rows="3"></textarea>
             </div>
         </div>
 
 
         <!-- //////////////////////////////////additional travelers ////////////////////////////////////////-->
 
-        <!-- <div style="border: solid darkgray; border-width:thin; padding:30px">
+        <div style="border: solid darkgray; border-width:thin; padding:30px">
             <div class="row mb-3">
                 <div class="subtitle ">Additional Travelers</div>
             </div>
@@ -205,7 +219,7 @@
 
 
                     <select class="form-control" [formControl]="number_of_add_employees" name="numEmpl" id="numEmpl">
-                        <option *ngFor="let num2 of selectNum2" [value]="num2" (click)="numEmployees(num2)">
+                        <option *ngFor="let num2 of emplCount" [value]="num2" (click)="numEmployees(num2)">
                             {{num2}}
                         </option>
                     </select>
@@ -214,7 +228,7 @@
                 <div class="col">
                     <label for="numBoard">Number of Additional Board Member Travelers </label>
                     <select class="form-control" [formControl]="number_of_add_board" name="numBoard" id="numBoard">
-                        <option *ngFor="let num2 of selectNum2" [value]="num2" (click)="numBoardMembers(num2)">
+                        <option *ngFor="let num2 of emplCount" [value]="num2" (click)="numBoardMembers(num2)">
                             {{num2}}
                         </option>
                     </select>
@@ -222,9 +236,9 @@
 
                 <div class="col">
                     <label for="requestDate">Number of Student <br>Travelers</label>
-                    <select class="form-control" [formControl]="number_of_student"  name="numStudent" id="numStudent">
-                        <option *ngFor="let num of selectNum" [value]="num" (click)="numStudents(num)">
-                            {{num}}
+                    <select class="form-control" [formControl]="number_of_student" name="numStudent" id="numStudent">
+                        <option *ngFor="let studCountNum of studCount" [value]="studCountNum" (click)="numStudents(studCountNum)">
+                            {{studCountNum}}
                         </option>
 
                     </select>
@@ -232,14 +246,15 @@
 
                 <div class="col">
                     <label for="numNonBoard">Number of Non-Employee, <br> Non-Board Travelers </label>
-                    <select class="form-control" [formControl]="number_of_non_board" name="numNonBoard" id="numNonBoard">
-                        <option *ngFor="let num2 of selectNum2" [value]="num2" (click)="numNonBoardMembers(num2)">
+                    <select class="form-control" [formControl]="number_of_non_board" name="numNonBoard"
+                        id="numNonBoard">
+                        <option *ngFor="let num2 of emplCount" [value]="num2" (click)="numNonBoardMembers(num2)">
                             {{num2}}
                         </option>
                     </select>
                 </div>
             </div>
-            <div class="subtext">Signatures are required</div> -->
+            <div class="subtext">Signatures are required</div>
             <!--//////////////////////////////////// if additional employees selected///////////////////////// -->
 
             <!-- <div class="row mb-3" *ngIf="employeeTable.includes(1)">
@@ -321,88 +336,93 @@
                 </table>
             </div> -->
 
-        <hr>
-        <!-- //////////////////////////////////////district funds required  //////////////////////////////-->
-        <div>
-            <div class="row mb-3">
-                <label for="districtFundsRequired">District Funds Required</label>
-                <div class="col">
-                    <div class="form-check">
-                        <input class="form-check-input" [formControl]="district_funds_required" name="districtFundsRadio" id="districtFundsRadioYes"
-                            type="radio" value="1">Yes
+            <hr>
+            <!-- //////////////////////////////////////district funds required  //////////////////////////////-->
+            <div>
+                <div class="row mb-3">
+                    <label for="districtFundsRequired">District Funds Required</label>
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" [formControl]="district_funds_required"
+                                name="districtFundsRadio" id="districtFundsRadioYes" type="radio" value="1">Yes
+                        </div>
                     </div>
-                </div>
-                <div class="col">
-                    <div class="form-check">
-                        <input class="form-check-input" [formControl]="district_funds_required" name="districtFundsRadio" id="districtFundsRadioNo" type="radio"
-                            checked="checked" value="0">No
+                    <div class="col">
+                        <div class="form-check">
+                            <input class="form-check-input" [formControl]="district_funds_required"
+                                name="districtFundsRadio" id="districtFundsRadioNo" type="radio" checked="checked"
+                                value="0">No
+                        </div>
+
                     </div>
+                    <div class="col" name="spacer"></div>
+                    <div class="col" name="spacer"></div>
+                    <div class="col" name="spacer"></div>
+                    <div class="col" name="spacer"></div>
 
                 </div>
-                <div class="col" name="spacer"></div>
-                <div class="col" name="spacer"></div>
-                <div class="col" name="spacer"></div>
-                <div class="col" name="spacer"></div>
+                <!-- {{distFundsTable}} -->
 
+
+                <div class="row mb-3" *ngIf="district_funds_required.value==1">
+                    <table class="table">
+                        <thead class="table-light" style="text-align: center;">
+                            <tr>
+                                <th>Fund</th>
+                                <th>Type</th>
+                                <th>Function</th>
+                                <th>Object</th>
+                                <th>Sub <br>Obj.</th>
+                                <th>Location</th>
+                                <th>Year</th>
+                                <th>PIC</th>
+                                <th>Dept</th>
+                                <th>Grant</th>
+                                <th>Funds</th>
+
+                            </tr>
+                        </thead>
+                        <tbody formArrayName="DistFundRows">
+                            <tr *ngFor="let obj of formArr.controls; let i = index; let l = last" [formGroupName]="i">
+                                <td><input type="text" class="form-control" formControlName="fund" id="fund"></td>
+                                <td><input type="text" class="form-control" formControlName="type" id="type"></td>
+                                <td><input test="text" class="form-control" formControlName="function" id="function">
+                                </td>
+                                <td><input type="text" class="form-control" formControlName="object" id="object"></td>
+                                <td><input type="text" class="form-control" formControlName="sub_object"
+                                        id="sub_object"></td>
+                                <td><input type="text" class="form-control" formControlName="location" id="location">
+                                </td>
+                                <td><input type="text" class="form-control" formControlName="year" id="year"></td>
+                                <td><input type="text" class="form-control" formControlName="pic" id="pic"></td>
+                                <td><input type="text" class="form-control" formControlName="department"
+                                        id="department"></td>
+                                <td><input type="text" class="form-control" formControlName="grant" id="grant"></td>
+                                <td><input type="text" class="form-control" formControlName="funds" id="funds"></td>
+                                <td>
+                                    <button *ngIf="formArr.length > 1" (click)="deleteRow(i)" class="btn btn-danger">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+
+                        <tbody>
+
+                            <td colspan="10"></td>
+                            <td style="text-align:right">0</td>
+                            <td> <button type="button" class="btn btn-default btn-sm" (click)="addNewRow()">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button></td>
+                        </tbody>
+
+                    </table>
+
+
+                </div>
             </div>
-<!-- {{distFundsTable}} -->
-
-
-            <div class="row mb-3" *ngIf="district_funds_required.value==1">
-                <table class="table">
-                    <thead class="table-light" style="text-align: center;">
-                        <tr>
-                            <th>Fund</th>
-                            <th>Type</th>
-                            <th>Function</th>
-                            <th>Object</th>
-                            <th>Sub <br>Obj.</th>
-                            <th>Location</th>
-                            <th>Year</th>
-                            <th>PIC</th>
-                            <th>Dept</th>
-                            <th>Grant</th>
-                            <th>Funds</th>
-                            
-                        </tr>
-                    </thead>
-                    <tbody formArrayName="DistFundRows" >
-                        <tr *ngFor="let obj of formArr.controls; let i = index; let l = last" [formGroupName]="i">
-                            <td><input type="text" class="form-control" formControlName="fund" id="fund"></td>
-                            <td><input type="text" class="form-control" formControlName="type" id="type"></td>
-                            <td><input test="text" class="form-control" formControlName="function" id="function"></td>
-                            <td><input type="text" class="form-control" formControlName="object" id="object"></td>
-                            <td><input type="text" class="form-control" formControlName="sub_object" id="sub_object"></td>
-                            <td><input type="text" class="form-control" formControlName="location" id="location"></td>
-                            <td><input type="text" class="form-control" formControlName="year" id="year"></td>
-                            <td><input type="text" class="form-control" formControlName="pic" id="pic"></td>
-                            <td><input type="text" class="form-control" formControlName="department" id="department"></td>
-                            <td><input type="text" class="form-control" formControlName="grant" id="grant"></td>
-                            <td><input type="text" class="form-control" formControlName="funds" id="funds"></td>
-                            <td> 
-                                <button *ngIf="formArr.length > 1" (click)="deleteRow(i)" class="btn btn-danger">
-                                    <span class="glyphicon glyphicon-trash"></span> 
-                                </button> 
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                  
-                    <tbody>
-
-                        <td colspan="10"></td>
-                        <td style="text-align:right">0</td>
-                        <td> <button type="button" class="btn btn-default btn-sm" (click)="addNewRow()">
-                            <span class="glyphicon glyphicon-plus"></span>
-                          </button></td>
-                    </tbody>
-               
-                </table>
-
-
-            </div>
-        </div>
-<!--         
+            <!--         
         <hr>
 
         <div class="row mb-3">
@@ -476,67 +496,72 @@
             </table>
             <div class="subtext">For Transportation, Car Rental, and Other, please enter “N/A” in the Vendor Number and
                 Vendor Name Columns if missing this information to be allowed to submit.</div>
-        </div>
-        <!-- additional checks needed  -->
-        <hr>
-        <div class="row mb-3">
-            <label for="additionalChecks">Additional Checks Needed</label>
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" name="additionalChecks" id="additionalChecksYes" type="radio">Yes
+
+                -->
+        </div> 
+            
+
+            <!-- additional checks needed  -->
+            <hr>
+            <div class="row mb-3">
+                <label for="additionalChecks">Additional Checks Needed</label>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" name="additionalChecks" id="additionalChecksYes"
+                            type="radio">Yes
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input class="form-check-input" name="additionalChecks" id="additionalChecksNo" type="radio">No
+                    </div>
+
+                </div>
+                <div class="col" name="spacer"></div>
+                <div class="col" name="spacer"></div>
+                <div class="col" name="spacer"></div>
+                <div class="col" name="spacer"></div>
+
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="grandTotal"> Grand Total</label>
+                    <input type="text" class="form-control" placeholder="$0.00" id="grandTotal" disabled>
                 </div>
             </div>
-            <div class="col">
-                <div class="form-check">
-                    <input class="form-check-input" name="additionalChecks" id="additionalChecksNo" type="radio">No
+            <hr>
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="comments">Comments</label>
+                    <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
                 </div>
+            </div>
+            <div class="row mb-3">
+                <div class="subtext">Optional</div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="signature">Secretary's Signature</label>
+                <input type="text" class="form-control" placeholder="You're name counts as your signature">
 
             </div>
-            <div class="col" name="spacer"></div>
-            <div class="col" name="spacer"></div>
-            <div class="col" name="spacer"></div>
-            <div class="col" name="spacer"></div>
+            <div class="row mb-3">
+                <label for="documnets">Documents for this trip:</label>
+                <button>Choose Files</button>
 
-        </div>
-
-        <div class="row mb-3">
-            <div class="col">
-                <label for="grandTotal"> Grand Total</label>
-                <input type="text" class="form-control" placeholder="$0.00" id="grandTotal" disabled>
             </div>
-        </div>
-        <hr>
-        <div class="row mb-3">
-            <div class="col">
-                <label for="comments">Comments</label>
-                <textarea class="form-control" name="comments" id="comments" rows="3"></textarea>
+
+            <div class="row mb-3" style="text-align: center;">
+                <label for="checkList">Please see the <a href="assets/TravelRequestChecklist.pdf" target="_blank">Travel
+                        Request Checklist</a> Request Checklist before submitting.</label> -->
+
+
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="subtext">Optional</div>
-        </div>
-
-        <div class="row mb-3">
-            <label for="signature">Secretary's Signature</label>
-            <input type="text" class="form-control" placeholder="You're name counts as your signature">
-
-        </div>
-        <div class="row mb-3">
-            <label for="documnets">Documents for this trip:</label>
-            <button>Choose Files</button>
-
-        </div>
-
-        <div class="row mb-3" style="text-align: center;">
-            <label for="checkList">Please see the <a href="assets/TravelRequestChecklist.pdf" target="_blank">Travel
-                    Request Checklist</a> Request Checklist before submitting.</label> -->
-
-
-        </div>
-<div class="row mb-3">
-    <div class="col">   </div>
-    <div class="col"><button (click)="onSubmit()">Sumbit</button></div>
-</div>
+            <div class="row mb-3">
+                <div class="col"> </div>
+                <div class="col"><button (click)="onSubmit()">Sumbit</button></div>
+            </div>
 
     </form>
 </div>

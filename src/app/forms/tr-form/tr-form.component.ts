@@ -53,6 +53,11 @@ export class TrFormComponent {
     this.initialDistrictFundsData(); // setting up the question array data into form.
   }
 
+  ngOnInit(){
+    this.emplCountAddNum() 
+    this.studCountAddNum()
+  }
+
   createDistrictFundForm() {
     this.dist_fund_response = this.formBuilder.group({
       DistFundRows: this.formBuilder.array([this.initDistFundRows()]),
@@ -160,6 +165,8 @@ export class TrFormComponent {
     return dataObject
   }
 
+
+
   onSubmit() {
     console.log(this.getAllData())
   }
@@ -167,168 +174,66 @@ export class TrFormComponent {
 
   // ------------ Old Code -------------------
 
-  // selectNum = [];
-  // num = 0;
-  // selectNum2 = [];
-  // num2 = 0;
+  // this makes the drop down 1-20 for employees and board members, and 1-300 for student additional travelers
+  studCount= [];
+  studCountNum = 0;
+  numOfStudents = 0;
 
-  // numOfEmployees = 0;
-  // employeeTable = [];
+  emplCount = []; 
+  emplCountNum = 0;
+  numOfEmployees = 0;
 
-  // numOfBoardMembers = 0;
-  // boardMembersTable = [];
 
-  // numOfStudents = 0;
-  // studentTable = [];
+  numOfBoardMembers = 0;
+  boardMembersTable = [];
 
-  // numOfNonBoardMembers = 0;
-  // nonBoardMembersTable = [];
+  
 
-  //  distFunds = 0;
-  // distFundsRow = 1;
-  // distFundsTable = []
-  // distFundsLoc = 0;
 
-  // // numAddEmployees:number;
-  // // numAddEmplOptions=this.selectNum;
-  // ngOnInit() {
-  //   this.selOption();
-  //   this.selOption2();
-  // }
-  // selOption() {
-  //   while (this.selectNum.length < 301) {
-
-  //     this.selectNum.push(this.num)
-  //     this.num++;
-  //     // console.log(this.num)
-  //   }
-  // }
-
-  // selOption2() {
-  //   while (this.selectNum2.length < 21) {
-
-  //     this.selectNum2.push(this.num2)
-  //     this.num2++;
-  //     // console.log(this.num)
-  //   }
-  // }
-
-  // numEmployees(value) {
-  //   this.numOfEmployees = value;
-  //   this.makeTableEmpl(this.numOfEmployees)
-  // }
-
-  // makeTableEmpl(value) {
-  //   let tableId = 1;
-  //   this.employeeTable = [];
-
-  //   for (let i = 0; i < value; i++) {
-  //     this.employeeTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
-
-  // numBoardMembers(value) {
-  //   this.numOfBoardMembers = value;
-  //   this.makeTableBoard(this.numOfBoardMembers)
-  //   // alert(this.numOfBoardMembers)
-  // }
+  numOfNonBoardMembers = 0;
+  nonBoardMembersTable = [];
 
 
 
-  // makeTableBoard(value) {
-  //   let tableId = 1;
-  //   this.boardMembersTable = [];
+  studCountAddNum() {
+    while (this.studCount.length < 301) {
 
-  //   for (let i = 0; i < value; i++) {
-  //     this.boardMembersTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
+      this.studCount.push(this.studCountNum)
+      this.studCountNum++;
+ 
+    }
+  }
 
-  // numStudents(value) {
-  //   this.numOfStudents = value;
-  //   this.makeTableStudent(this.numOfStudents)
-  //   // alert(this.numOfStudents)
-  // }
+  emplCountAddNum() {
+    while (this.emplCount.length < 21) {
 
+      this.emplCount.push(this.emplCountNum)
+      this.emplCountNum++;
+      
+    }
+  }
 
-
-  // makeTableStudent(value) {
-  //   let tableId = 1;
-  //   this.studentTable = [];
-
-  //   for (let i = 0; i < value; i++) {
-  //     this.studentTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
-
-  // numNonBoardMembers(value) {
-  //   this.numOfNonBoardMembers = value;
-  //   this.makeTableNonBoard(this.numOfNonBoardMembers)
-  //   // alert(this.numOfNonBoardMembers)
-  // }
+  numEmployees(value) {
+    this.numOfEmployees = value;
+   
+  }
 
 
 
-  // makeTableNonBoard(value) {
-  //   let tableId = 1;
-  //   this.nonBoardMembersTable = [];
+  numBoardMembers(value) {
+    this.numOfBoardMembers = value;
 
-  //   for (let i = 0; i < value; i++) {
-  //     this.nonBoardMembersTable.push(tableId);
-  //     tableId++
-  //   }
-  // }
+  }
 
-  // districtFunds(bool) {
-  //   if (bool == 1) {
-  //     // this.distFundsRow = 1;
-  //     this.distFunds = 1;
-  //     // this.makeTableDistFunds();
-  //   }
-  //   else {
-  //     this.distFunds = 0;
-  //     // this.makeTableDistFunds();
-  //     // this.distFundsTable=[];
-  //     // this.distFundsRow = 0;
-  //   }
-    // alert(bool);
-  // }
+  numStudents(value) {
+    this.numOfStudents = value;
+   
+  }
 
-  // makeTableDistFunds() {
-  //   let tableRow = 1;
-  //   this.distFundsTable = [];
-
-  //   for (let i = 0; i < this.distFundsRow; i++) {
-  //     this.distFundsTable.push(tableRow);
-  //     tableRow++
-  //   }
-  //   // alert(this.distFundsTable)
-
-  // }
-
-  // addDistFunds() {
-  //   this.distFundsRow++;
-  //   this.distFundsLoc = this.distFundsRow
-  //   this.makeTableDistFunds();
-  //   // alert(this.distFundsTable)
-  // }
-
-  // removeDistFunds(i) {
-  //   delete this.distFundsTable[i - 1]
-  //   //  alert(this.distFundsTable[this.distFundsTable.length-1])
-
-  //   if (this.distFundsTable.length == 0) {
-  //     this.distFunds = 0
-  //   }
-
-  //   // alert(this.distFundsTable)
-  //   alert(this.secretary_num.value + " " + this.secretary_name.value + " " + this.secretary_email.value)
-
-  //   // alert(this.distFundsTable[this.distFundsTable.length-1])
-  // }
+  numNonBoardMembers(value) {
+    this.numOfNonBoardMembers = value;
+   
+  }
 
 
 }
